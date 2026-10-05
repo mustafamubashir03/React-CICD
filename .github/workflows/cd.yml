@@ -18,4 +18,4 @@ jobs:
       - name: "Setup vercel cli"
         run: npm i -g vercel
       - name: "Deploy to vercel"
-        run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --confirm --no-prompt
+        run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --confirm
