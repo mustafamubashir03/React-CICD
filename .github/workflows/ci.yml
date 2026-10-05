@@ -16,6 +16,8 @@ jobs:
         run: node -v
       - name: "Clone the repository"
         uses: actions/checkout@v4
+      - name: "List dir before installation"
+        run: ls
       - name: "Install dependencies"
         run: npm install
       - name: "List directories"
