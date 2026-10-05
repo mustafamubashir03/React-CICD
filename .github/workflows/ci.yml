@@ -1,4 +1,5 @@
 name: "Sample react ci pipeline"
+
 on:
   push:
     branches: ["main"]
@@ -8,15 +9,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Clone the repository FIRST so Node knows where the package files are
       - name: "Clone the repository"
         uses: actions/checkout@v4
 
-      # 2. Setup Node.js after checking out your code
       - name: "Setup Node JS"
         uses: actions/setup-node@v4
         with:
-          node-version: "21"
+          node-version: "22"
+          cache: "npm"
 
       - name: "Check node version"
         run: node -v
@@ -24,11 +24,8 @@ jobs:
       - name: "List dir before installation"
         run: ls -la
 
-      # 3. Completely clear BOTH node_modules and lockfiles to force clean binary fetches
       - name: "Install dependencies"
-        run: |
-          rm -rf node_modules package-lock.json
-          npm install
+        run: npm ci
 
       - name: "List directories"
         run: ls -la
