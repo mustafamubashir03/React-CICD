@@ -8,25 +8,36 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: "Setup Node JS"
-        uses: actions/setup-node@v7
-        with:
-          node-version: "21"
-      - name: "Check node version"
-        run: node -v
+      # 1. Clone the repository FIRST so Node knows where the package files are
       - name: "Clone the repository"
         uses: actions/checkout@v4
+
+      # 2. Setup Node.js after checking out your code
+      - name: "Setup Node JS"
+        uses: actions/setup-node@v4
+        with:
+          node-version: "21"
+
+      - name: "Check node version"
+        run: node -v
+
       - name: "List dir before installation"
-        run: ls
+        run: ls -la
+
+      # 3. Completely clear BOTH node_modules and lockfiles to force clean binary fetches
       - name: "Install dependencies"
         run: |
-          rm -f package-lock.json
-          npm install --include=optional
+          rm -rf node_modules package-lock.json
+          npm install
+
       - name: "List directories"
-        run: ls
+        run: ls -la
+
       - name: "Test"
         run: npm run test
+
       - name: "Lint"
         run: npm run lint
+
       - name: "Build"
         run: npm run build
