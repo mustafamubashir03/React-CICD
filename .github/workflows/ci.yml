@@ -19,7 +19,9 @@ jobs:
       - name: "List dir before installation"
         run: ls
       - name: "Install dependencies"
-        run: npm ci
+        run: |
+          rm -f package-lock.json
+          npm install --include=optional
       - name: "List directories"
         run: ls
       - name: "Test"
